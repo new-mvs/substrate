@@ -33,11 +33,12 @@ where
 	C: UsageProvider<B>,
 	BA: Backend<B>,
 {
-	let reverted = backend.revert(blocks, false)?;
+	//specify if we can reverse finalized blocks
+	let reverted = backend.revert(blocks, true)?;
 	let info = client.usage_info().chain;
 
 	if reverted.0.is_zero() {
-		info!("There aren't any non-finalized blocks to revert.");
+		info!("There aren't any blocks to revert.");
 	} else {
 		info!("Reverted {} blocks. Best: #{} ({})", reverted.0, info.best_number, info.best_hash);
 	}
